@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_server.c                                  :+:      :+:    :+:   */
+/*   minitalk_server_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asippy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/23 20:21:14 by asippy            #+#    #+#             */
-/*   Updated: 2022/02/26 23:56:54 by asippy           ###   ########.fr       */
+/*   Created: 2022/03/01 00:19:07 by asippy            #+#    #+#             */
+/*   Updated: 2022/03/01 00:19:07 by asippy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minitalk.h"
+#include "../include_bonus/minitalk_bonus.h"
 
 static int	ft_get_message(int sig, char *str)
 {

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_client.c                                  :+:      :+:    :+:   */
+/*   minitalk_client_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asippy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/23 20:21:04 by asippy            #+#    #+#             */
-/*   Updated: 2022/02/26 23:55:53 by asippy           ###   ########.fr       */
+/*   Created: 2022/03/01 00:18:22 by asippy            #+#    #+#             */
+/*   Updated: 2022/03/01 00:18:22 by asippy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minitalk.h"
+#include "../include_bonus/minitalk_bonus.h"
 
 static void	ft_send_message(int pid, int info, size_t flag)
 {
