@@ -12,11 +12,20 @@
 
 #include "../include_bonus/minitalk_bonus.h"
 
+static void	ft_recieve_feedback(int sig)
+{
+	(void) sig;
+	return ;
+}
+
 static void	ft_send_message(int pid, int info, size_t flag)
 {
-	size_t	bits_length;
-	size_t	iter;
+	struct sigaction	act;
+	size_t				bits_length;
+	size_t				iter;
 
+	act.sa_handler = &ft_recieve_feedback;
+	sigaction(SIGUSR1, &act, NULL);
 	bits_length = 8;
 	if (flag)
 		bits_length = 32;
@@ -28,7 +37,8 @@ static void	ft_send_message(int pid, int info, size_t flag)
 		else
 			kill(pid, SIGUSR2);
 		iter++;
-		usleep(20);
+		pause();
+		usleep(35);
 	}
 	return ;
 }

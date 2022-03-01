@@ -90,7 +90,7 @@ BONUS_OBJS						=	PRINTF_OBJS_DIR="$(B_PRINTF_OBJS_DIR)"\
 #------------------------------END OF BONUS VARIABLES------------------------------------
 #--------------------------------GENERAL VARIABLES---------------------------------------
 CC								=	gcc
-CFLAGS							=	-Wall #-Werror -Wextra
+CFLAGS							=	-Wall -Werror -Wextra
 OFLAGS							=	-O2	
 RM								=	rm -rf
 #----------------------------END OF GENERAL VARIABLES------------------------------------

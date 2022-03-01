@@ -63,7 +63,6 @@ static void	ft_recieve_message(int sig, siginfo_t *act, void *oldact)
 	static int		message_legnth;
 	static char		*str;
 
-	(void) act;
 	(void) oldact;
 	if (message_legnth == 0)
 		message_legnth = ft_get_message_length(sig);
@@ -76,6 +75,9 @@ static void	ft_recieve_message(int sig, siginfo_t *act, void *oldact)
 			return ;
 		message_legnth = -1;
 	}
+	usleep(35);
+	kill(act->si_pid, SIGUSR1);
+	return ;
 }
 
 int	main(void)
@@ -86,7 +88,7 @@ int	main(void)
 	pid = getpid();
 	ft_printf("The server's PID: %d\n", pid);
 	act.sa_flags = SA_SIGINFO;
-	act.sa_sigaction = ft_recieve_message;
+	act.sa_sigaction = &ft_recieve_message;
 	sigaction(SIGUSR1, &act, NULL);
 	sigaction(SIGUSR2, &act, NULL);
 	while (1)

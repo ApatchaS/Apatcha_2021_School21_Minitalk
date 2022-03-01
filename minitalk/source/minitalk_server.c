@@ -74,6 +74,7 @@ static void	ft_recieve_message(int sig)
 			return ;
 		message_legnth = -1;
 	}
+	return ;
 }
 
 int	main(void)
