@@ -95,6 +95,8 @@ OFLAGS							=	-O2
 RM								=	rm -rf
 #----------------------------END OF GENERAL VARIABLES------------------------------------
 #------------------------------------LINKING---------------------------------------------
+all:							$(NAME_CLIENT) $(NAME_SERVER)
+
 $(NAME_CLIENT):					$(MINITALK_OBJS_DIR_EX) $(PRINTF_OBJS_DIR) $(PRINTF_OBJS) $(MINITALK_CLIENT_OBJS)
 								@echo "$(YELLOW)CREATING: $(NAME_CLIENT)...$(RESET)"
 								$(CC) $(PRINTF_OBJS) $(MINITALK_CLIENT_OBJS) -o $(NAME_CLIENT)
@@ -126,11 +128,9 @@ $(MINITALK_OBJS_DIR)%.o:		$(MINITALK_SRCS_DIR)%.c $(MINITALK_HEAD)
 								@echo "$(GREEN)$(BOLD)CREATED: $@$(RESET)"
 #--------------------------------END OF COMPILLING---------------------------------------
 #-----------------------------------PHONY TARGETS----------------------------------------
-all:							$(NAME_CLIENT) $(NAME_SERVER)
-
 bonus:
 								@echo "$(YELLOW)CREATING BONUS PART...$(RESET)"
-								make $(BONUS_HEADS) $(BONUS_SRCS) $(BONUS_OBJS)
+								@make $(BONUS_HEADS) $(BONUS_SRCS) $(BONUS_OBJS)
 								@echo "$(GREEN)$(BOLD)CREATED BONUS PART$(RESET)"
 
 clean:
