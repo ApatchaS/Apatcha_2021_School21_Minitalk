@@ -95,7 +95,7 @@ OFLAGS							=	-O2
 RM								=	rm -rf
 #----------------------------END OF GENERAL VARIABLES------------------------------------
 #------------------------------------LINKING---------------------------------------------
-all:							$(NAME_CLIENT) $(NAME_SERVER)
+all:							$(MINITALK_OBJS_DIR) $(NAME_CLIENT) $(NAME_SERVER)
 
 $(NAME_CLIENT):					$(MINITALK_OBJS_DIR_EX) $(PRINTF_OBJS_DIR) $(PRINTF_OBJS) $(MINITALK_CLIENT_OBJS)
 								@echo "$(YELLOW)CREATING: $(NAME_CLIENT)...$(RESET)"
