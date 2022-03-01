@@ -13,13 +13,14 @@
 NAME_CLIENT						=	client
 NAME_SERVER						=	server
 
+#--------------------------------------COLORS--------------------------------------------
 BOLD							=	\033[1m
 RED								=	\033[31m
 GREEN							=	\033[32m
 YELLOW							=	\033[33m
 RESET							=	\033[0m
-
-#-------------------------------PRINTF VARIABLES-----------------------------------------
+#----------------------------------END OF COLORS-----------------------------------------
+#---------------------------------PRINTF VARIABLES---------------------------------------
 PRINTF_SRCS_DIR					=	printf/source/
 PRINTF_SRCS_LIST				=	ft_anything.c\
 									ft_char.c\
@@ -56,7 +57,7 @@ B_PRINTF_OBJS_DIR				=	printf/object_bonus/
 PRINTF_OBJS_LIST				=	$(patsubst %.c, %.o, $(PRINTF_SRCS_LIST))
 PRINTF_OBJS						=	$(addprefix $(PRINTF_OBJS_DIR), $(PRINTF_OBJS_LIST))
 #----------------------------END OF PRINTF VARIABLES-------------------------------------
-#-------------------------------MINITALK VARIABLES---------------------------------------
+#------------------------------MINITALK VARIABLES----------------------------------------
 MINITALK_SRCS_DIR				=	minitalk/source/
 MINITALK_CLIENT_SRCS_LIST		=	minitalk_client.c
 MINITALK_SERVER_SRCS_LIST		=	minitalk_server.c
@@ -76,25 +77,34 @@ MINITALK_CLIENT_OBJS_LIST		=	$(patsubst %.c, %.o, $(MINITALK_CLIENT_SRCS_LIST))
 MINITALK_CLIENT_OBJS			=	$(addprefix $(MINITALK_OBJS_DIR), $(MINITALK_CLIENT_OBJS_LIST))
 MINITALK_SERVER_OBJS_LIST		=	$(patsubst %.c, %.o, $(MINITALK_SERVER_SRCS_LIST))
 MINITALK_SERVER_OBJS			=	$(addprefix $(MINITALK_OBJS_DIR), $(MINITALK_SERVER_OBJS_LIST))
-#-------------------------------END OF MINITALK VARIABLES--------------------------------
 
+MINITALK_OBJS_DIR_EX			=	$(if $(findstring $(MINITALK_OBJS_DIR),$(shell ls -d minitalk/*/)),,$(MINITALK_OBJS_DIR))
+#-----------------------------END OF MINITALK VARIABLES----------------------------------
+#---------------------------------BONUS VARIABLES----------------------------------------
+BONUS_SRCS						=	PRINTF_SRCS_DIR="$(B_PRINTF_SRCS_DIR)" PRINTF_SRCS_LIST="$(B_PRINTF_SRCS_LIST)"\
+									MINITALK_SRCS_DIR="$(B_MINITALK_SRCS_DIR)" MINITALK_CLIENT_SRCS_LIST="$(B_MINITALK_CLIENT_SRCS_LIST)" MINITALK_SERVER_SRCS_LIST="$(B_MINITALK_SERVER_SRCS_LIST)"
+BONUS_HEADS						=	PRINTF_HEAD_DIR="$(B_PRINTF_HEAD_DIR)" PRINTF_HEAD_NAME="$(B_PRINTF_HEAD_NAME)"\
+									MINITALK_HEAD_DIR="$(B_MINITALK_HEAD_DIR)" MINITALK_HEAD_NAME="$(B_MINITALK_HEAD_NAME)"
+BONUS_OBJS						=	PRINTF_OBJS_DIR="$(B_PRINTF_OBJS_DIR)"\
+									MINITALK_OBJS_DIR="$(B_MINITALK_OBJS_DIR)"
+#------------------------------END OF BONUS VARIABLES------------------------------------
+#--------------------------------GENERAL VARIABLES---------------------------------------
 CC								=	gcc
 CFLAGS							=	-Wall #-Werror -Wextra
 OFLAGS							=	-O2	
 RM								=	rm -rf
-
-all:							$(NAME_CLIENT) $(NAME_SERVER)
-
-$(NAME_CLIENT):					$(if $(findstring $(MINITALK_OBJS_DIR),$(shell ls -d $(MINITALK_OBJS_DIR))),,$(MINITALK_OBJS_DIR)) $(PRINTF_OBJS_DIR) $(PRINTF_OBJS) $(MINITALK_CLIENT_OBJS)
+#----------------------------END OF GENERAL VARIABLES------------------------------------
+#------------------------------------LINKING---------------------------------------------
+$(NAME_CLIENT):					$(MINITALK_OBJS_DIR_EX) $(PRINTF_OBJS_DIR) $(PRINTF_OBJS) $(MINITALK_CLIENT_OBJS)
 								@echo "$(YELLOW)CREATING: $(NAME_CLIENT)...$(RESET)"
 								$(CC) $(PRINTF_OBJS) $(MINITALK_CLIENT_OBJS) -o $(NAME_CLIENT)
 								@echo "$(GREEN)$(BOLD)CREATED: $(NAME_CLIENT)$(RESET)"
 
-$(NAME_SERVER):					$(if $(findstring $(MINITALK_OBJS_DIR),$(shell ls -d $(MINITALK_OBJS_DIR))),,$(MINITALK_OBJS_DIR)) $(PRINTF_OBJS_DIR) $(PRINTF_OBJS) $(MINITALK_SERVER_OBJS)
+$(NAME_SERVER):					$(MINITALK_OBJS_DIR_EX) $(PRINTF_OBJS_DIR) $(PRINTF_OBJS) $(MINITALK_SERVER_OBJS)
 								@echo "$(YELLOW)CREATING: $(NAME_SERVER)...$(RESET)"
 								$(CC) $(PRINTF_OBJS) $(MINITALK_SERVER_OBJS) -o $(NAME_SERVER)			
 								@echo "$(GREEN)$(BOLD)CREATED: $(NAME_SERVER)$(RESET)"
-
+#--------------------------------END OF LINKING------------------------------------------
 #------------------------------------DIRS------------------------------------------------
 $(PRINTF_OBJS_DIR):
 								@echo "$(YELLOW)CREATING DIR: $(PRINTF_OBJS_DIR)...$(RESET)"
@@ -105,8 +115,8 @@ $(MINITALK_OBJS_DIR):
 								@echo "$(YELLOW)CREATING DIR: $(MINITALK_OBJS_DIR)...$(RESET)"
 								mkdir $(MINITALK_OBJS_DIR)
 								@echo "$(GREEN)$(BOLD)CREATED DIR: $(MINITALK_OBJS_DIR)$(RESET)"
-#--------------------------------END OF DIRS---------------------------------------------
-#--------------------------------COMPILLING----------------------------------------------
+#----------------------------------END OF DIRS-------------------------------------------
+#-----------------------------------COMPILLING-------------------------------------------
 $(PRINTF_OBJS_DIR)%.o:			$(PRINTF_SRCS_DIR)%.c $(PRINTF_HEAD)
 								$(CC) $(OFLAGS) $(CFLAGS) -I$(PRINTF_HEAD_DIR) -c $< -o $@
 								@echo "$(GREEN)$(BOLD)CREATED: $@$(RESET)"
@@ -114,7 +124,14 @@ $(PRINTF_OBJS_DIR)%.o:			$(PRINTF_SRCS_DIR)%.c $(PRINTF_HEAD)
 $(MINITALK_OBJS_DIR)%.o:		$(MINITALK_SRCS_DIR)%.c $(MINITALK_HEAD)
 								$(CC) $(OFLAGS) $(CFLAGS) -I$(MINITALK_HEAD_DIR) -c $< -o $@
 								@echo "$(GREEN)$(BOLD)CREATED: $@$(RESET)"
-#------------------------------END OF COMPILLING-----------------------------------------
+#--------------------------------END OF COMPILLING---------------------------------------
+#-----------------------------------PHONY TARGETS----------------------------------------
+all:							$(NAME_CLIENT) $(NAME_SERVER)
+
+bonus:
+								@echo "$(YELLOW)CREATING BONUS PART...$(RESET)"
+								make $(BONUS_HEADS) $(BONUS_SRCS) $(BONUS_OBJS)
+								@echo "$(GREEN)$(BOLD)CREATED BONUS PART$(RESET)"
 
 clean:
 								@echo "$(YELLOW)REMOVING FILES IN: $(PRINTF_OBJS_DIR) AND $(B_PRINTF_OBJS_DIR)...$(RESET)"
@@ -134,9 +151,5 @@ fclean:							clean
 
 re:								fclean all
 
-bonus:
-								@echo "$(YELLOW)CREATING BONUS PART...$(RESET)"
-								@make PRINTF_SRCS_DIR="$(B_PRINTF_SRCS_DIR)" PRINTF_SRCS_LIST="$(B_PRINTF_SRCS_LIST)" PRINTF_HEAD_DIR="$(B_PRINTF_HEAD_DIR)" PRINTF_HEAD_NAME="$(B_PRINTF_HEAD_NAME)" PRINTF_OBJS_DIR="$(B_PRINTF_OBJS_DIR)" MINITALK_SRCS_DIR="$(B_MINITALK_SRCS_DIR)" MINITALK_CLIENT_SRCS_LIST="$(B_MINITALK_CLIENT_SRCS_LIST)" MINITALK_SERVER_SRCS_LIST="$(B_MINITALK_SERVER_SRCS_LIST)" MINITALK_HEAD_DIR="$(B_MINITALK_HEAD_DIR)" MINITALK_HEAD_NAME="$(B_MINITALK_HEAD_NAME)" MINITALK_OBJS_DIR="$(B_MINITALK_OBJS_DIR)"
-								@echo "$(GREEN)$(BOLD)CREATED BONUS PART$(RESET)"
-
-.PHONY:							all clean fclean re bonus
+.PHONY:							all bonus clean fclean re
+#--------------------------------END OF PHONY TARGETS------------------------------------
