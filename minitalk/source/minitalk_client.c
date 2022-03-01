@@ -28,7 +28,7 @@ static void	ft_send_message(int pid, int info, size_t flag)
 		else
 			kill(pid, SIGUSR2);
 		iter++;
-		usleep(20);
+		usleep(70);
 	}
 	return ;
 }
