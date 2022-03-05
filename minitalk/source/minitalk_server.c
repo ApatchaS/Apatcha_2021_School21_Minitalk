@@ -6,7 +6,7 @@
 /*   By: asippy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 20:21:14 by asippy            #+#    #+#             */
-/*   Updated: 2022/02/26 23:56:54 by asippy           ###   ########.fr       */
+/*   Updated: 2022/03/05 19:17:44 by asippy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,13 @@ static int	ft_get_message_length(int sig)
 	return (message_legnth);
 }
 
-static void	ft_recieve_message(int sig)
+static void	ft_recieve_message(int sig, siginfo_t *act, void *oldact)
 {
 	static int		message_legnth;
 	static char		*str;
 
+	(void) act;
+	(void) oldact;
 	if (message_legnth == 0)
 		message_legnth = ft_get_message_length(sig);
 	if (message_legnth < 0)
@@ -84,7 +86,8 @@ int	main(void)
 
 	pid = getpid();
 	ft_printf("The server's PID: %d\n", pid);
-	act.sa_handler = &ft_recieve_message;
+	act.sa_flags = SA_SIGINFO;
+	act.sa_sigaction = &ft_recieve_message;
 	sigaction(SIGUSR1, &act, NULL);
 	sigaction(SIGUSR2, &act, NULL);
 	while (1)
